@@ -7,7 +7,7 @@ axios
   .get("https://api.github.com/users/emkayDauda")
   .then(response => {
     console.log(response.data)
-    componentBuilder(response.data)
+    document.querySelector('.cards').appendChild(componentBuilder(response.data))
   })
   .catch(error => {
     console.log(error)
