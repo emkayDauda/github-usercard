@@ -7,6 +7,7 @@ axios
   .get("https://api.github.com/users/emkayDauda")
   .then(response => {
     console.log(response.data)
+    componentBuilder(response.data)
   })
   .catch(error => {
     console.log(error)
@@ -62,6 +63,7 @@ function componentBuilder(gitHubData) {
     userImage,
     cardInfo,
     name,
+    userName,
     location,
     profile,
     profileLink,
@@ -71,6 +73,41 @@ function componentBuilder(gitHubData) {
   ] = ["div", "img", "div", "h3", "p", "p", "p", "a", "p", "p", "p"].map(
     element => document.createElement(element)
   );
+
+  card.classList.add('card');
+
+  userImage.setAttribute('src', gitHubData.avatar_url);
+  card.appendChild(userImage);
+
+  cardInfo.classList.add('card-info');
+  card.appendChild(cardInfo);
+
+  name.classList.add('name');
+  name.textContent = gitHubData.name;
+  cardInfo.appendChild(name);
+
+  userName.classList.add('username');
+  userName.textContent = gitHubData.login;
+  cardInfo.appendChild(userName);
+
+  location.textContent = `Location: ${gitHubData.location}`;
+  cardInfo.appendChild(location);
+
+  profileLink.setAttribute('href', gitHubData.html_url);
+  profile.appendChild(profileLink);
+  cardInfo.appendChild(profile);
+
+  followers.textContent = `Followers: ${gitHubData.followers}`;
+  cardInfo.appendChild(followers);
+
+  following.textContent = `Following: ${gitHubData.following}`;
+  cardInfo.appendChild(following);
+
+  bio.textContent = `Bio: ${gitHubData.bio}`;
+  cardInfo.appendChild(bio);
+
+
+  return card;
 }
 
 
