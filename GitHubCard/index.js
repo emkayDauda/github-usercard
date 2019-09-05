@@ -3,16 +3,32 @@
            https://api.github.com/users/<your name>
 */
 
-axios
-  .get("https://api.github.com/users/emkayDauda")
+function getProfile(username = 'emkayDauda'){
+  axios
+  .get(`https://api.github.com/users/${username}`)
   .then(response => {
     console.log(response.data)
     document.querySelector('.cards').appendChild(componentBuilder(response.data))
+    axios
+    .get(response.data.followers_url)
+    .then(response => {
+      console.log(response.data);
+      const followers = response.data
+      followers.forEach(follower => {
+        getProfile(follower.login);        
+      });
+    })
+    .catch(error => {
+      console.log(error);
+    })
+
   })
   .catch(error => {
     console.log(error)
   });
+}
 
+getProfile();
 /* Step 2: Inspect and study the data coming back, this is YOUR 
    github info! You will need to understand the structure of this 
    data in order to use it to build your component function 
@@ -34,7 +50,15 @@ axios
           user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+const followersArray = [
+  'tetondan',
+  'dustinmyers',
+  'justsml',
+  'ladrillo',
+  'bigknell'
+];
+
+followersArray.forEach(follwer => getProfile(follwer));
 
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
