@@ -15,7 +15,12 @@ function getProfile(username = 'emkayDauda'){
       console.log(response.data);
       const followers = response.data
       followers.forEach(follower => {
+        if (username === 'emkayDauda') {
+          getProfile(follower.login);
         getProfile(follower.login);        
+          getProfile(follower.login);
+          console.log(follower.login)
+        }
       });
     })
     .catch(error => {
@@ -93,8 +98,9 @@ function componentBuilder(gitHubData) {
     profileLink,
     followers,
     following,
-    bio
-  ] = ["div", "img", "div", "h3", "p", "p", "p", "a", "p", "p", "p"].map(
+    bio,
+    expanse
+  ] = ["div", "img", "div", "h3", "p", "p", "p", "a", "p", "p", "p", "div"].map(
     element => document.createElement(element)
   );
 
@@ -118,7 +124,9 @@ function componentBuilder(gitHubData) {
   cardInfo.appendChild(location);
 
   profileLink.setAttribute('href', gitHubData.html_url);
+  profile.textContent = 'Profile: ';
   profile.appendChild(profileLink);
+  profileLink.textContent = gitHubData.html_url;
   cardInfo.appendChild(profile);
 
   followers.textContent = `Followers: ${gitHubData.followers}`;
@@ -130,6 +138,18 @@ function componentBuilder(gitHubData) {
   bio.textContent = `Bio: ${gitHubData.bio}`;
   cardInfo.appendChild(bio);
 
+
+  cardInfo.appendChild(expanse)
+  expanse.classList.add("contribution")
+  expanse.classList.toggle("card-open")
+  expanse.style.width = "100%";
+  expanse.style.marginTop = "4rem"; 
+
+  new GitHubCalendar(".contribution", gitHubData.login);
+  card.addEventListener('click', e => {
+    expanse.classList.toggle("card-open")
+    console.log('clicked')
+  })
 
   return card;
 }
