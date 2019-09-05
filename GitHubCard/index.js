@@ -5,8 +5,8 @@
 
 axios
   .get("https://api.github.com/users/emkayDauda")
-  .then(data => {
-    console.log(data)
+  .then(response => {
+    console.log(response.data)
   })
   .catch(error => {
     console.log(error)
