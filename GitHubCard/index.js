@@ -55,6 +55,25 @@ const followersArray = [];
 
 */
 
+
+function componentBuilder(gitHubData) {
+  const [
+    card,
+    userImage,
+    cardInfo,
+    name,
+    location,
+    profile,
+    profileLink,
+    followers,
+    following,
+    bio
+  ] = ["div", "img", "div", "h3", "p", "p", "p", "a", "p", "p", "p"].map(
+    element => document.createElement(element)
+  );
+}
+
+
 /* List of LS Instructors Github username's: 
   tetondan
   dustinmyers
